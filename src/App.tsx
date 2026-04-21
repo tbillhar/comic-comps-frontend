@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type FormEvent } from 'react';
 import { fetchComps } from './api';
 import type { CompResponse } from './types';
 
@@ -9,7 +9,7 @@ const EXAMPLES = [
 ];
 
 function currency(value: number | null | undefined): string {
-  if (value == null) return '—';
+  if (value == null) return '--';
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -25,7 +25,7 @@ export function App() {
 
   const hasResults = useMemo(() => (data?.sales?.length ?? 0) > 0, [data]);
 
-  async function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     setLoading(true);
     setError(null);
@@ -66,7 +66,7 @@ export function App() {
             spellCheck={false}
           />
           <button type="submit" disabled={loading || !query.trim()}>
-            {loading ? 'Checking…' : 'Get comps'}
+            {loading ? 'Checking...' : 'Get comps'}
           </button>
         </form>
 
@@ -90,7 +90,7 @@ export function App() {
           <article className="stat-card">
             <p>Range</p>
             <strong>
-              {currency(data.low)}–{currency(data.high)}
+              {currency(data.low)} - {currency(data.high)}
             </strong>
           </article>
           <article className="stat-card">

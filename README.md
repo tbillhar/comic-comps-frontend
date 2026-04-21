@@ -70,11 +70,11 @@ npm run dev
 
 ## Suggested repo workflow
 1. Push this repo to GitHub.
-2. Connect the repo to Codex in the cloud. OpenAI's Codex web setup says you can connect a GitHub repository and create pull requests from its work. citeturn158005search5turn158005search13
+2. Connect the repo to Codex in the cloud.
 3. Ask Codex for focused UI changes in small tasks.
-4. Review diffs or PRs in GitHub. OpenAI's GitHub integration docs say Codex can review pull requests from GitHub comments like `@codex review`. citeturn158005search1
+4. Review diffs or PRs in GitHub.
 5. Let GitHub Actions run the included CI build.
 6. Deploy from GitHub to Netlify or Vercel.
 
 ## Notes on GitHub + Codex workflow
-OpenAI's current docs say Codex web connects to GitHub repositories for cloud workflows and can create pull requests from its work. GitHub-connected ChatGPT can also read repo contents live when connected. citeturn158005search5turn158005search13turn158005search3
+Use small, focused frontend tasks so each Codex change stays easy to review and test.
