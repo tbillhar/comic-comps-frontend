@@ -73,12 +73,49 @@ h1 {
   margin-top: 18px;
 }
 
+.query-control {
+  min-width: 0;
+}
+
 .search-form input {
+  width: 100%;
   padding: 16px;
   border-radius: 14px;
   border: 1px solid rgba(148, 163, 184, 0.22);
   background: rgba(15, 23, 42, 0.9);
   color: #fff;
+}
+
+.cert-toggle {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  margin: 0;
+  padding: 4px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.9);
+}
+
+.cert-toggle label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+  border-radius: 10px;
+  color: #cbd5e1;
+  font-weight: 700;
+}
+
+.cert-toggle label.active {
+  background: #2563eb;
+  color: #fff;
+}
+
+.cert-toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .search-form button,
@@ -120,15 +157,13 @@ h1 {
 }
 
 .stat-card p,
-.sale-title,
-.sale-meta,
+.sales-table th,
+.sales-table td,
 .sales-card-header span {
   color: #cbd5e1;
 }
 
 .stat-card p,
-.sale-price,
-.sale-title,
 .sales-card-header h2,
 .sales-card-header span {
   margin: 0;
@@ -152,42 +187,36 @@ h1 {
   margin-bottom: 12px;
 }
 
-.sales-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.sales-table-wrap {
+  overflow-x: auto;
 }
 
-.sale-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 14px 0;
+.sales-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sales-table th,
+.sales-table td {
+  padding: 12px 10px;
   border-top: 1px solid rgba(148, 163, 184, 0.16);
+  text-align: left;
+  vertical-align: top;
 }
 
-.sale-row:first-child {
-  border-top: 0;
+.sales-table th {
+  color: #93c5fd;
+  font-size: 0.78rem;
+  text-transform: uppercase;
 }
 
-.sale-price {
-  font-size: 1.2rem;
-  font-weight: 700;
+.sales-table td:nth-child(2),
+.sales-table td:nth-child(3),
+.sales-table td:nth-child(4) {
+  white-space: nowrap;
 }
 
-.sale-title {
-  margin-top: 4px;
-  line-height: 1.4;
-}
-
-.sale-meta {
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.sale-meta a {
+.sales-table a {
   color: #93c5fd;
 }
 
@@ -209,7 +238,7 @@ h1 {
 
 @media (min-width: 720px) {
   .search-form {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) 160px auto;
   }
 
   .search-form button {

@@ -1,8 +1,15 @@
+export type CertType = 'raw' | 'cgc';
+
 export type Sale = {
   title: string;
   price: number;
   date: string;
   url?: string;
+};
+
+export type CompRequest = {
+  query: string;
+  cert_type: CertType;
 };
 
 export type CompResponse = {

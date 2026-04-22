@@ -18,7 +18,7 @@ This is designed to fit a GitHub + Codex workflow similar to the one you're alre
 
 Request:
 ```json
-{ "query": "X-Men 1 CGC 4.0" }
+{ "query": "X-Men 1 CGC 4.0", "cert_type": "cgc" }
 ```
 
 Response:

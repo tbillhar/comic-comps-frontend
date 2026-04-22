@@ -1,6 +1,6 @@
 import { useMemo, useState, type FormEvent } from 'react';
 import { fetchComps } from './api';
-import type { CompResponse } from './types';
+import type { CertType, CompResponse } from './types';
 
 const EXAMPLES = [
   'X-Men 1 CGC 4.0',
@@ -19,6 +19,7 @@ function currency(value: number | null | undefined): string {
 
 export function App() {
   const [query, setQuery] = useState('X-Men 1 CGC 4.0');
+  const [certType, setCertType] = useState<CertType>('cgc');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<CompResponse | null>(null);
@@ -31,7 +32,7 @@ export function App() {
     setError(null);
 
     try {
-      const next = await fetchComps(query.trim());
+      const next = await fetchComps(query.trim(), certType);
       setData(next);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');
@@ -51,20 +52,46 @@ export function App() {
         </p>
 
         <form onSubmit={handleSubmit} className="search-form">
-          <label htmlFor="query" className="sr-only">
-            Search query
-          </label>
-          <input
-            id="query"
-            name="query"
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="X-Men 1 CGC 4.0"
-            autoCapitalize="off"
-            autoCorrect="off"
-            spellCheck={false}
-          />
+          <div className="query-control">
+            <label htmlFor="query" className="sr-only">
+              Search query
+            </label>
+            <input
+              id="query"
+              name="query"
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="X-Men 1 CGC 4.0"
+              autoCapitalize="off"
+              autoCorrect="off"
+              spellCheck={false}
+            />
+          </div>
+
+          <fieldset className="cert-toggle" aria-label="Certification type">
+            <label className={certType === 'raw' ? 'active' : ''}>
+              <input
+                type="radio"
+                name="cert_type"
+                value="raw"
+                checked={certType === 'raw'}
+                onChange={() => setCertType('raw')}
+              />
+              Raw
+            </label>
+            <label className={certType === 'cgc' ? 'active' : ''}>
+              <input
+                type="radio"
+                name="cert_type"
+                value="cgc"
+                checked={certType === 'cgc'}
+                onChange={() => setCertType('cgc')}
+              />
+              CGC
+            </label>
+          </fieldset>
+
           <button type="submit" disabled={loading || !query.trim()}>
             {loading ? 'Checking...' : 'Get comps'}
           </button>
@@ -94,10 +121,6 @@ export function App() {
             </strong>
           </article>
           <article className="stat-card">
-            <p>Safe buy</p>
-            <strong>{currency(data.safe_buy ?? null)}</strong>
-          </article>
-          <article className="stat-card">
             <p>Usable sales</p>
             <strong>{data.usable_count}</strong>
           </article>
@@ -107,27 +130,39 @@ export function App() {
       {hasResults ? (
         <section className="sales-card">
           <div className="sales-card-header">
-            <h2>Recent usable comps</h2>
+            <h2>Sales</h2>
             <span>{data?.query}</span>
           </div>
-          <ul className="sales-list">
-            {data?.sales.map((sale) => (
-              <li key={`${sale.title}-${sale.date}-${sale.price}`} className="sale-row">
-                <div>
-                  <p className="sale-price">{currency(sale.price)}</p>
-                  <p className="sale-title">{sale.title}</p>
-                </div>
-                <div className="sale-meta">
-                  <span>{sale.date}</span>
-                  {sale.url ? (
-                    <a href={sale.url} target="_blank" rel="noreferrer">
-                      Open
-                    </a>
-                  ) : null}
-                </div>
-              </li>
-            ))}
-          </ul>
+          <div className="sales-table-wrap">
+            <table className="sales-table">
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Link</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data?.sales.map((sale) => (
+                  <tr key={`${sale.title}-${sale.date}-${sale.price}`}>
+                    <td>{sale.title}</td>
+                    <td>{currency(sale.price)}</td>
+                    <td>{sale.date}</td>
+                    <td>
+                      {sale.url ? (
+                        <a href={sale.url} target="_blank" rel="noreferrer">
+                          Open
+                        </a>
+                      ) : (
+                        '--'
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </section>
       ) : null}
     </main>
