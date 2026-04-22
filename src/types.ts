@@ -4,6 +4,7 @@ export type Sale = {
   title: string;
   price: number;
   date: string;
+  source?: string;
   url?: string;
 };
 
@@ -14,6 +15,7 @@ export type CompRequest = {
 
 export type CompResponse = {
   query: string;
+  cert_type: CertType;
   median: number | null;
   low: number | null;
   high: number | null;

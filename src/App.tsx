@@ -124,6 +124,10 @@ export function App() {
             <p>Usable sales</p>
             <strong>{data.usable_count}</strong>
           </article>
+          <article className="stat-card">
+            <p>Type</p>
+            <strong>{data.cert_type.toUpperCase()}</strong>
+          </article>
         </section>
       ) : null}
 
@@ -140,6 +144,7 @@ export function App() {
                   <th scope="col">Title</th>
                   <th scope="col">Price</th>
                   <th scope="col">Date</th>
+                  <th scope="col">Source</th>
                   <th scope="col">Link</th>
                 </tr>
               </thead>
@@ -149,6 +154,7 @@ export function App() {
                     <td>{sale.title}</td>
                     <td>{currency(sale.price)}</td>
                     <td>{sale.date}</td>
+                    <td>{sale.source ?? '--'}</td>
                     <td>
                       {sale.url ? (
                         <a href={sale.url} target="_blank" rel="noreferrer">
