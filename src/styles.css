@@ -66,6 +66,31 @@ h1 {
   line-height: 1.5;
 }
 
+.mode-toggle {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 18px;
+  padding: 4px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.9);
+}
+
+.mode-toggle button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #cbd5e1;
+  font-weight: 700;
+}
+
+.mode-toggle button.active {
+  background: #2563eb;
+  color: #fff;
+}
+
 .search-form {
   display: grid;
   grid-template-columns: 1fr;
@@ -73,11 +98,34 @@ h1 {
   margin-top: 18px;
 }
 
+.range-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.range-grid {
+  display: grid;
+  gap: 12px;
+}
+
 .query-control {
   min-width: 0;
 }
 
-.search-form input {
+.field-control {
+  min-width: 0;
+}
+
+.field-control label {
+  display: block;
+  margin-bottom: 6px;
+  color: #cbd5e1;
+  font-size: 0.85rem;
+}
+
+.search-form input,
+.range-form input {
   width: 100%;
   padding: 16px;
   border-radius: 14px;
@@ -90,7 +138,7 @@ h1 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4px;
-  margin: 0;
+  margin: 12px 0 0;
   padding: 4px;
   border: 1px solid rgba(148, 163, 184, 0.22);
   border-radius: 14px;
@@ -119,6 +167,7 @@ h1 {
 }
 
 .search-form button,
+.range-form button,
 .chip {
   border: 0;
   border-radius: 14px;
@@ -179,12 +228,31 @@ h1 {
   margin-top: 18px;
 }
 
+.range-results {
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+}
+
 .sales-card-header {
   display: flex;
   justify-content: space-between;
   gap: 12px;
   align-items: baseline;
   margin-bottom: 12px;
+}
+
+.range-summary-copy {
+  margin: 0;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.group-stats-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 16px;
 }
 
 .sales-table-wrap {
@@ -239,14 +307,22 @@ h1 {
 
 @media (min-width: 720px) {
   .search-form {
-    grid-template-columns: minmax(0, 1fr) 160px auto;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .search-form button {
     min-width: 150px;
   }
 
+  .range-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .results-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .group-stats-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
